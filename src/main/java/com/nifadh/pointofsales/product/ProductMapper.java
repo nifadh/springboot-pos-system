@@ -1,9 +1,4 @@
 package com.nifadh.pointofsales.product;
-
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import org.hibernate.annotations.NaturalId;
 import org.springframework.stereotype.Component;
 
 @Component
