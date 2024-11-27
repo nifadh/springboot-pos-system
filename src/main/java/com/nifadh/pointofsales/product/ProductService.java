@@ -11,7 +11,7 @@ public class ProductService {
 
     public ProductResponse addProduct(ProductRequest productRequest) {
         Product product = productMapper.productRequestToProduct(productRequest);
-        product.setIsDeleted(true);
+        product.setIsDeleted(false);
         product = productRepository.save(product);
         return productMapper.productToProductResponse(product);
     }
