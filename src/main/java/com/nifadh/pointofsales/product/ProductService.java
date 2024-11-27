@@ -21,7 +21,7 @@ public class ProductService {
     }
 
     public ProductResponseList getAllProducts() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findByIsDeletedIsFalse();
         return productMapper.productListToProductResponseList(products);
     }
 
