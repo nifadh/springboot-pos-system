@@ -18,4 +18,10 @@ public class ProductController {
     public ProductResponseList getAllProducts() {
         return productService.getAllProducts();
     }
+
+    @DeleteMapping("/product/{productId}")
+    public void softDeleteProduct(@PathVariable Integer productId) {
+        productService.softDeleteProduct(productId);
+    }
+
 }
