@@ -3,6 +3,8 @@ package com.nifadh.pointofsales.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ProductService {
@@ -15,5 +17,16 @@ public class ProductService {
         product = productRepository.save(product);
         return productMapper.productToProductResponse(product);
     }
+
+    public ProductResponseList getAllProducts() {
+        List<Product> products = productRepository.findAll();
+        return productMapper.productListToProductResponseList(products);
+    }
+
+
+
+
+
+
 
 }

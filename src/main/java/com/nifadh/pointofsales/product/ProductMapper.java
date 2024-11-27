@@ -1,6 +1,9 @@
 package com.nifadh.pointofsales.product;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Component
 public class ProductMapper {
     public Product productRequestToProduct(ProductRequest productRequest) {
@@ -25,5 +28,14 @@ public class ProductMapper {
                 .sellingPrice(product.getSellingPrice())
                 .isDeleted(product.getIsDeleted())
                 .build();
+    }
+
+    public ProductResponseList productListToProductResponseList(List<Product> productList) {
+        List<ProductResponse> productResponseList = new ArrayList<>();
+        productList.forEach(product -> {
+            ProductResponse productResponse = productToProductResponse(product);
+            productResponseList.add(productResponse);
+        });
+        return new ProductResponseList(productResponseList);
     }
 }
