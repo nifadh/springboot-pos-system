@@ -1,9 +1,7 @@
 package com.nifadh.pointofsales.product;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -30,6 +28,14 @@ public class ProductService {
         product.setIsDeleted(true);
         productRepository.save(product);
     }
+
+    public ProductResponse editProductById(Integer productId, ProductRequest productRequest) {
+        Product product = productMapper.productRequestToProduct(productRequest);
+        product.setId(productId);
+        return productMapper.productToProductResponse(productRepository.save(product));
+    }
+
+
 
 
 

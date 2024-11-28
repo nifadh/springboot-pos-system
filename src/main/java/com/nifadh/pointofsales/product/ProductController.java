@@ -24,4 +24,12 @@ public class ProductController {
         productService.softDeleteProduct(productId);
     }
 
+    @PutMapping("/product/{productId}")
+    public ProductResponse editProduct(
+            @PathVariable Integer productId,
+            @RequestBody ProductRequest productRequest
+    ) {
+        return productService.editProductById(productId, productRequest);
+    }
+
 }
