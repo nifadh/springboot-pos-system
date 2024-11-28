@@ -1,6 +1,5 @@
-package com.nifadh.pointofsales.product.category;
+package com.nifadh.pointofsales.modules.product.category;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

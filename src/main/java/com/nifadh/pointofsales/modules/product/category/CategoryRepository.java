@@ -1,4 +1,4 @@
-package com.nifadh.pointofsales.product.category;
+package com.nifadh.pointofsales.modules.product.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

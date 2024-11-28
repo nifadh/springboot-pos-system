@@ -1,4 +1,4 @@
-package com.nifadh.pointofsales.product.category;
+package com.nifadh.pointofsales.modules.product.category;
 
 import lombok.Builder;
 import lombok.Data;

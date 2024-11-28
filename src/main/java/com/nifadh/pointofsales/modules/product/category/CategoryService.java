@@ -1,4 +1,4 @@
-package com.nifadh.pointofsales.product.category;
+package com.nifadh.pointofsales.modules.product.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -39,6 +39,11 @@ public class CategoryService {
         });
         return new CategoryResponseList(categoryResponses);
     }
+
+
+
+
+
 
 
 

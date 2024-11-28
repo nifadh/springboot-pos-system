@@ -1,4 +1,4 @@
-package com.nifadh.pointofsales.product;
+package com.nifadh.pointofsales.modules.product;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

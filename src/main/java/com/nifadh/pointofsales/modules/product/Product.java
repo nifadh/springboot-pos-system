@@ -1,25 +1,35 @@
-package com.nifadh.pointofsales.product.category;
+package com.nifadh.pointofsales.modules.product;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.NaturalId;
+
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Builder
-public class Category {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Integer id;
 
+    @NaturalId
+    private String itemCode;
+
     private String name;
+
+    private String image;
+
+    private String category;
+
+    private Double costPrice;
+
+    private Double sellingPrice;
 
     private Boolean isDeleted;
 }

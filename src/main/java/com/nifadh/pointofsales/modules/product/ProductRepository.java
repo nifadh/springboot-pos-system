@@ -1,4 +1,4 @@
-package com.nifadh.pointofsales.product;
+package com.nifadh.pointofsales.modules.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
