@@ -14,6 +14,9 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
+
+
+    //crud operations
     public ProductResponse addProduct(ProductRequest productRequest) {
         checkForDuplicateProduct(productRequest.getName());
         Product product = productMapper.productRequestToProduct(productRequest);
@@ -43,6 +46,9 @@ public class ProductService {
     }
 
 
+
+
+    //validations
     private void checkForDuplicateProduct(String name) {
         if (productRepository.existsByNameEqualsIgnoreCase(name)) {
             throw new DuplicateResourceException(
@@ -50,7 +56,6 @@ public class ProductService {
             );
         }
     }
-
 
     private void checkIfProductIdIsValid(Integer productId) {
         if (!productRepository.existsById(productId)) {
