@@ -2,7 +2,6 @@ package com.nifadh.pointofsales.modules.product.category;
 
 import com.nifadh.pointofsales.exception.DuplicateResourceException;
 import com.nifadh.pointofsales.exception.ResourceNotFoundException;
-import com.nifadh.pointofsales.modules.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +18,11 @@ public class CategoryService {
         Category category = categoryMapper.categoryRequestToCategory(categoryRequest);
         category = categoryRepository.save(category);
         return categoryMapper.categoryToCategoryResponse(category);
+    }
+
+    public Category findCategoryById(Integer categoryId) {
+        checkIfCategoryIdIsValid(categoryId);
+        return categoryRepository.findById(categoryId).get();
     }
 
 
@@ -38,8 +42,8 @@ public class CategoryService {
         }
     }
 
-    private void checkIfCategoryIdIsValid(Integer categoryId) {
-        if (categoryRepository.existsById(categoryId)) {
+    public void checkIfCategoryIdIsValid(Integer categoryId) {
+        if (!categoryRepository.existsById(categoryId)) {
             throw new ResourceNotFoundException(
                     "Category with ID: " + categoryId + " does not exist!"
             );
