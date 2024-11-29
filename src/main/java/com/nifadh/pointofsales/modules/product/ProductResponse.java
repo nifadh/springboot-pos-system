@@ -1,5 +1,7 @@
 package com.nifadh.pointofsales.modules.product;
 
+import com.nifadh.pointofsales.modules.product.category.Category;
+import com.nifadh.pointofsales.modules.product.category.CategoryResponse;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +14,7 @@ public class ProductResponse {
     private final String itemCode;
     private final String name;
     private final String image;
-    private final String category;
+    private final CategoryResponse category;
     private final Double costPrice;
     private final Double sellingPrice;
-    private final Boolean isDeleted;
 }
