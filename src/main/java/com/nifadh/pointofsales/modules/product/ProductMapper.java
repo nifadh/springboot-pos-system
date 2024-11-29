@@ -1,17 +1,23 @@
 package com.nifadh.pointofsales.modules.product;
+import com.nifadh.pointofsales.modules.product.category.Category;
+import com.nifadh.pointofsales.modules.product.category.CategoryMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ProductMapper {
-    public Product productRequestToProduct(ProductRequest productRequest) {
+
+    private final CategoryMapper categoryMapper;
+    public Product productRequestToProduct(ProductRequest productRequest, Category category) {
         return Product.builder()
                 .itemCode(productRequest.getItemCode())
                 .name(productRequest.getName())
                 .image(productRequest.getImage())
-                .category(productRequest.getImage())
+                .category(category)
                 .costPrice(productRequest.getCostPrice())
                 .sellingPrice(productRequest.getSellingPrice())
                 .build();
@@ -23,10 +29,11 @@ public class ProductMapper {
                 .itemCode(product.getItemCode())
                 .name(product.getName())
                 .image(product.getImage())
-                .category(product.getCategory())
+                .category(
+                        categoryMapper.categoryToCategoryResponse(product.getCategory())
+                )
                 .costPrice(product.getCostPrice())
                 .sellingPrice(product.getSellingPrice())
-                .isDeleted(product.getIsDeleted())
                 .build();
     }
 
