@@ -1,9 +1,7 @@
 package com.nifadh.pointofsales.modules.product;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.nifadh.pointofsales.modules.product.category.Category;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
@@ -25,7 +23,9 @@ public class Product {
 
     private String image;
 
-    private String category;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(referencedColumnName = "id", name = "category_id")
+    private Category category;
 
     private Double costPrice;
 
