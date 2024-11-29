@@ -25,6 +25,10 @@ public class CategoryService {
         return categoryRepository.findById(categoryId).get();
     }
 
+    public void hardDeleteCategory(Integer categoryId) {
+        checkIfCategoryIdIsValid(categoryId);
+        categoryRepository.deleteById(categoryId);
+    }
 
 
 

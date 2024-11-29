@@ -23,7 +23,7 @@ public class Product {
 
     private String image;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "category_id")
     private Category category;
 

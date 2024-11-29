@@ -19,4 +19,9 @@ public class CategoryController {
         return categoryService.getAllCategories();
     }
 
+    @DeleteMapping("/category/{categoryId}")
+    public void hardDeleteCategoryById(@PathVariable Integer categoryId) {
+        categoryService.hardDeleteCategory(categoryId);
+    }
+
 }
