@@ -1,5 +1,6 @@
 package com.nifadh.pointofsales.modules.product.category;
 
+import com.nifadh.pointofsales.exception.DuplicateResourceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,12 @@ public class CategoryService {
     private final CategoryRepository categoryRepository;
 
     public CategoryResponse addCategory(CategoryRequest categoryRequest) {
+        checkForDuplicateCategory(categoryRequest.getName());
         Category category = Category.builder()
                 .name(categoryRequest.getName())
                 .isDeleted(false)
                 .build();
-
         category = categoryRepository.save(category);
-
         return CategoryResponse.builder()
                 .id(category.getId())
                 .name(category.getName())
@@ -41,10 +41,12 @@ public class CategoryService {
     }
 
 
-
-
-
-
-
+    private void checkForDuplicateCategory(String category) {
+        if (categoryRepository.existsByNameEqualsIgnoreCase(category)) {
+            throw new DuplicateResourceException(
+                    "Category: " + category + " already exists!"
+            );
+        }
+    }
 
 }
