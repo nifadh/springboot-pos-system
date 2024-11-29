@@ -23,9 +23,15 @@ public class ProductService {
         return productMapper.productListToProductResponseList(products);
     }
 
-    public void softDeleteProduct(Integer productId) {
+//    public void softDeleteProduct(Integer productId) {
+//        Product product = productRepository.findById(productId).orElseThrow();
+//        product.setIsDeleted(true);
+//        productRepository.save(product);
+//    }
+
+    public void changeSoftDeleteStatus(Integer productId, SoftDeleteRequest softDeleteRequest) {
         Product product = productRepository.findById(productId).orElseThrow();
-        product.setIsDeleted(true);
+        product.setIsDeleted(softDeleteRequest.getIsDeleted());
         productRepository.save(product);
     }
 

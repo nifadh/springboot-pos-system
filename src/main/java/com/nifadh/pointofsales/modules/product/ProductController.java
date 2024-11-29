@@ -19,9 +19,12 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @DeleteMapping("/product/{productId}")
-    public void softDeleteProduct(@PathVariable Integer productId) {
-        productService.softDeleteProduct(productId);
+    @PatchMapping("/product/{productId}")
+    public void changeSoftDeleteStatus(
+            @PathVariable Integer productId,
+            @RequestBody SoftDeleteRequest softDeleteRequest
+    ) {
+        productService.changeSoftDeleteStatus(productId, softDeleteRequest);
     }
 
     @PutMapping("/product/{productId}")
