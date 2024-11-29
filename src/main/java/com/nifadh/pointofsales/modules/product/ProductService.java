@@ -2,6 +2,8 @@ package com.nifadh.pointofsales.modules.product;
 
 import com.nifadh.pointofsales.exception.DuplicateResourceException;
 import com.nifadh.pointofsales.exception.ResourceNotFoundException;
+import com.nifadh.pointofsales.modules.product.category.Category;
+import com.nifadh.pointofsales.modules.product.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +15,16 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final CategoryService categoryService;
 
 
 
     //crud operations
     public ProductResponse addProduct(ProductRequest productRequest) {
         checkForDuplicateProduct(productRequest.getName());
-        Product product = productMapper.productRequestToProduct(productRequest);
+        Category category = categoryService.findCategoryById(productRequest.getCategoryId());
+
+        Product product = productMapper.productRequestToProduct(productRequest, category);
         product.setIsDeleted(false);
         product = productRepository.save(product);
         return productMapper.productToProductResponse(product);
@@ -40,7 +45,8 @@ public class ProductService {
 
     public ProductResponse editProductById(Integer productId, ProductRequest productRequest) {
         checkIfProductIdIsValid(productId);
-        Product product = productMapper.productRequestToProduct(productRequest);
+        Category category = categoryService.findCategoryById(productRequest.getCategoryId());
+        Product product = productMapper.productRequestToProduct(productRequest, category);
         product.setId(productId);
         return productMapper.productToProductResponse(productRepository.save(product));
     }
