@@ -1,8 +1,11 @@
 package com.nifadh.pointofsales.modules.product;
 
+import com.nifadh.pointofsales.exception.DuplicateResourceException;
+import com.nifadh.pointofsales.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -12,6 +15,7 @@ public class ProductService {
     private final ProductMapper productMapper;
 
     public ProductResponse addProduct(ProductRequest productRequest) {
+        checkForDuplicateProduct(productRequest.getName());
         Product product = productMapper.productRequestToProduct(productRequest);
         product.setIsDeleted(false);
         product = productRepository.save(product);
@@ -23,22 +27,37 @@ public class ProductService {
         return productMapper.productListToProductResponseList(products);
     }
 
-//    public void softDeleteProduct(Integer productId) {
-//        Product product = productRepository.findById(productId).orElseThrow();
-//        product.setIsDeleted(true);
-//        productRepository.save(product);
-//    }
 
     public void changeSoftDeleteStatus(Integer productId, SoftDeleteRequest softDeleteRequest) {
+        checkIfProductIdIsValid(productId);
         Product product = productRepository.findById(productId).orElseThrow();
         product.setIsDeleted(softDeleteRequest.getIsDeleted());
         productRepository.save(product);
     }
 
     public ProductResponse editProductById(Integer productId, ProductRequest productRequest) {
+        checkIfProductIdIsValid(productId);
         Product product = productMapper.productRequestToProduct(productRequest);
         product.setId(productId);
         return productMapper.productToProductResponse(productRepository.save(product));
+    }
+
+
+    private void checkForDuplicateProduct(String name) {
+        if (productRepository.existsByNameEqualsIgnoreCase(name)) {
+            throw new DuplicateResourceException(
+                    "Product: '" + name + "' already exists!"
+            );
+        }
+    }
+
+
+    private void checkIfProductIdIsValid(Integer productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new ResourceNotFoundException(
+                    "Product with ID: " + productId + " does not exist!"
+            );
+        }
     }
 
 
