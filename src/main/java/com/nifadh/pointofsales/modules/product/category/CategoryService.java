@@ -2,8 +2,12 @@ package com.nifadh.pointofsales.modules.product.category;
 
 import com.nifadh.pointofsales.exception.DuplicateResourceException;
 import com.nifadh.pointofsales.exception.ResourceNotFoundException;
+import com.nifadh.pointofsales.modules.commondtos.SoftDeleteRequest;
+import com.nifadh.pointofsales.modules.product.Product;
+import com.nifadh.pointofsales.modules.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,6 +16,7 @@ import java.util.List;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final ProductRepository productRepository;
 
     public CategoryResponse addCategory(CategoryRequest categoryRequest) {
         checkForDuplicateCategory(categoryRequest.getName());
@@ -25,9 +30,30 @@ public class CategoryService {
         return categoryRepository.findById(categoryId).get();
     }
 
-    public void hardDeleteCategory(Integer categoryId) {
+    public void hardDeleteCategoryById(Integer categoryId) {
         checkIfCategoryIdIsValid(categoryId);
         categoryRepository.deleteById(categoryId);
+    }
+
+    @Transactional
+    public void changeSoftDeleteStatus(Integer categoryId, SoftDeleteRequest softDeleteRequest) {
+        checkIfCategoryIdIsValid(categoryId);
+        Category category = categoryRepository.findById(categoryId).get();
+
+        if (category.getIsDeleted().equals(softDeleteRequest.getIsDeleted())) {
+            return;
+        }
+
+        category.setIsDeleted(softDeleteRequest.getIsDeleted());
+        categoryRepository.save(category);
+
+        if (softDeleteRequest.getIsDeleted() == true) {
+            List<Product> products = productRepository.findByCategoryIdAndIsDeletedIsFalse(categoryId);
+            for (Product product : products) {
+                product.setIsDeleted(softDeleteRequest.getIsDeleted());
+                productRepository.save(product);
+            }
+        }
     }
 
 

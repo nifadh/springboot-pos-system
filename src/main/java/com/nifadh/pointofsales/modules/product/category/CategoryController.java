@@ -1,5 +1,6 @@
 package com.nifadh.pointofsales.modules.product.category;
 
+import com.nifadh.pointofsales.modules.commondtos.SoftDeleteRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,7 +22,15 @@ public class CategoryController {
 
     @DeleteMapping("/category/{categoryId}")
     public void hardDeleteCategoryById(@PathVariable Integer categoryId) {
-        categoryService.hardDeleteCategory(categoryId);
+        categoryService.hardDeleteCategoryById(categoryId);
+    }
+
+    @PatchMapping("/category/{categoryId}")
+    public void changeSoftDeleteStatus(
+            @PathVariable Integer categoryId,
+            @RequestBody SoftDeleteRequest softDeleteRequest
+    ) {
+        categoryService.changeSoftDeleteStatus(categoryId, softDeleteRequest);
     }
 
 }
