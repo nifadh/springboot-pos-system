@@ -1,5 +1,6 @@
 package com.nifadh.pointofsales.modules.product;
 
+import com.nifadh.pointofsales.modules.commondtos.SoftDeleteRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +34,11 @@ public class ProductController {
             @RequestBody ProductRequest productRequest
     ) {
         return productService.editProductById(productId, productRequest);
+    }
+
+    @DeleteMapping("/product/{productId}")
+    public void hardDeleteProductById(@PathVariable Integer productId) {
+        productService.hardDeleteProduct(productId);
     }
 
 }
