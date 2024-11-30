@@ -2,12 +2,12 @@ package com.nifadh.pointofsales.modules.product;
 
 import com.nifadh.pointofsales.exception.DuplicateResourceException;
 import com.nifadh.pointofsales.exception.ResourceNotFoundException;
+import com.nifadh.pointofsales.modules.commondtos.SoftDeleteRequest;
 import com.nifadh.pointofsales.modules.product.category.Category;
 import com.nifadh.pointofsales.modules.product.category.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.lang.module.ResolutionException;
 import java.util.List;
 
 @Service
@@ -43,12 +43,19 @@ public class ProductService {
         productRepository.save(product);
     }
 
+
     public ProductResponse editProductById(Integer productId, ProductRequest productRequest) {
         checkIfProductIdIsValid(productId);
         Category category = categoryService.findCategoryById(productRequest.getCategoryId());
         Product product = productMapper.productRequestToProduct(productRequest, category);
         product.setId(productId);
         return productMapper.productToProductResponse(productRepository.save(product));
+    }
+
+
+    public void hardDeleteProduct(Integer productId) {
+        checkIfProductIdIsValid(productId);
+        productRepository.deleteById(productId);
     }
 
 
