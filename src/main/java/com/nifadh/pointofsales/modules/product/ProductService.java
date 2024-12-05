@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Random;
 
 @Service
 @RequiredArgsConstructor
@@ -21,17 +22,28 @@ public class ProductService {
     private final BrandService brandService;
 
 
-
-    //crud operations
     public ProductResponse addProduct(ProductRequest productRequest) {
         checkForDuplicateProduct(productRequest.getName());
         Category category = categoryService.findCategoryById(productRequest.getCategoryId());
         Brand brand = brandService.findBrandById(productRequest.getBrandId());
 
         Product product = productMapper.productRequestToProduct(productRequest, category, brand);
+        String itemCode = generateItemCode(category.getName(), brand.getName());
+        product.setItemCode(itemCode);
         product.setIsDeleted(false);
         product = productRepository.save(product);
         return productMapper.productToProductResponse(product);
+    }
+
+    public String generateItemCode(String categoryName, String brandName) {
+        String categoryPrefix = categoryName.substring(0, 2).toUpperCase();
+        String brandPrefix = brandName.substring(0, 2).toUpperCase();
+        String itemCode;
+        do {
+            int randomValue = new Random().nextInt(9000) + 1000;
+            itemCode = categoryPrefix + "-" + brandPrefix + "-" + randomValue;
+        } while (productRepository.existsByItemCode(itemCode));
+        return itemCode;
     }
 
     public ProductResponseList getAllProducts() {
