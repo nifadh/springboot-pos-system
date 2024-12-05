@@ -11,5 +11,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Boolean existsByNameEqualsIgnoreCase(String name);
     List<Product> findByCategoryIdAndIsDeletedIsFalse(Integer categoryId);
     List<Product> findByBrandIdAndIsDeletedIsFalse(Integer brandId);
+    Boolean existsByItemCode(String itemCode);
 
 }
