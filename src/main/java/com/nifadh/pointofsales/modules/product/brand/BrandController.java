@@ -1,6 +1,7 @@
 package com.nifadh.pointofsales.modules.product.brand;
 
 import com.nifadh.pointofsales.modules.commondtos.SoftDeleteRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ public class BrandController {
     private final BrandService brandService;
 
     @PostMapping("/brand")
-    public BrandResponse addCategory(@RequestBody BrandRequest brandRequest) {
+    public BrandResponse addCategory(@Valid @RequestBody BrandRequest brandRequest) {
         return brandService.addBrand(brandRequest);
     }
 
