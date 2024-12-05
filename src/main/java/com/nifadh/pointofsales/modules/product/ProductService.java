@@ -3,6 +3,8 @@ package com.nifadh.pointofsales.modules.product;
 import com.nifadh.pointofsales.exception.DuplicateResourceException;
 import com.nifadh.pointofsales.exception.ResourceNotFoundException;
 import com.nifadh.pointofsales.modules.commondtos.SoftDeleteRequest;
+import com.nifadh.pointofsales.modules.product.brand.Brand;
+import com.nifadh.pointofsales.modules.product.brand.BrandService;
 import com.nifadh.pointofsales.modules.product.category.Category;
 import com.nifadh.pointofsales.modules.product.category.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final CategoryService categoryService;
+    private final BrandService brandService;
 
 
 
@@ -23,8 +26,9 @@ public class ProductService {
     public ProductResponse addProduct(ProductRequest productRequest) {
         checkForDuplicateProduct(productRequest.getName());
         Category category = categoryService.findCategoryById(productRequest.getCategoryId());
+        Brand brand = brandService.findBrandById(productRequest.getBrandId());
 
-        Product product = productMapper.productRequestToProduct(productRequest, category);
+        Product product = productMapper.productRequestToProduct(productRequest, category, brand);
         product.setIsDeleted(false);
         product = productRepository.save(product);
         return productMapper.productToProductResponse(product);
@@ -47,7 +51,8 @@ public class ProductService {
     public ProductResponse editProductById(Integer productId, ProductRequest productRequest) {
         checkIfProductIdIsValid(productId);
         Category category = categoryService.findCategoryById(productRequest.getCategoryId());
-        Product product = productMapper.productRequestToProduct(productRequest, category);
+        Brand brand = brandService.findBrandById(productRequest.getBrandId());
+        Product product = productMapper.productRequestToProduct(productRequest, category, brand);
         product.setId(productId);
         return productMapper.productToProductResponse(productRepository.save(product));
     }
