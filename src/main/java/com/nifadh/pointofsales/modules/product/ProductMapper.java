@@ -18,7 +18,6 @@ public class ProductMapper {
 
     public Product productRequestToProduct(ProductRequest productRequest, Category category, Brand brand) {
         return Product.builder()
-                .itemCode(productRequest.getItemCode())
                 .name(productRequest.getName())
                 .image(productRequest.getImage())
                 .category(category)
