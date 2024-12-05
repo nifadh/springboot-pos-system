@@ -1,4 +1,6 @@
 package com.nifadh.pointofsales.modules.product;
+import com.nifadh.pointofsales.modules.product.brand.Brand;
+import com.nifadh.pointofsales.modules.product.brand.BrandMapper;
 import com.nifadh.pointofsales.modules.product.category.Category;
 import com.nifadh.pointofsales.modules.product.category.CategoryMapper;
 import lombok.RequiredArgsConstructor;
@@ -12,12 +14,15 @@ import java.util.List;
 public class ProductMapper {
 
     private final CategoryMapper categoryMapper;
-    public Product productRequestToProduct(ProductRequest productRequest, Category category) {
+    private final BrandMapper brandMapper;
+
+    public Product productRequestToProduct(ProductRequest productRequest, Category category, Brand brand) {
         return Product.builder()
                 .itemCode(productRequest.getItemCode())
                 .name(productRequest.getName())
                 .image(productRequest.getImage())
                 .category(category)
+                .brand(brand)
                 .costPrice(productRequest.getCostPrice())
                 .sellingPrice(productRequest.getSellingPrice())
                 .build();
@@ -31,6 +36,9 @@ public class ProductMapper {
                 .image(product.getImage())
                 .category(
                         categoryMapper.categoryToCategoryResponse(product.getCategory())
+                )
+                .brand(
+                        brandMapper.brandToBrandResponse(product.getBrand())
                 )
                 .costPrice(product.getCostPrice())
                 .sellingPrice(product.getSellingPrice())
