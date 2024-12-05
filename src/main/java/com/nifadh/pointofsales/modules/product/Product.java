@@ -1,5 +1,6 @@
 package com.nifadh.pointofsales.modules.product;
 
+import com.nifadh.pointofsales.modules.product.brand.Brand;
 import com.nifadh.pointofsales.modules.product.category.Category;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,6 +27,10 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "category_id")
     private Category category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(referencedColumnName = "id", name = "brand_id")
+    private Brand brand;
 
     private Double costPrice;
 
