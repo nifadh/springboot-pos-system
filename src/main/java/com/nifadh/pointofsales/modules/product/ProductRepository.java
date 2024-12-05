@@ -10,5 +10,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     List<Product> findByIsDeletedIsFalse();
     Boolean existsByNameEqualsIgnoreCase(String name);
     List<Product> findByCategoryIdAndIsDeletedIsFalse(Integer categoryId);
+    List<Product> findByBrandIdAndIsDeletedIsFalse(Integer brandId);
 
 }
