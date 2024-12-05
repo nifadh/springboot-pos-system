@@ -12,6 +12,7 @@ public class ProductRequest {
     private final String name;
     private final String image;
     private final Integer categoryId;
+    private final Integer brandId;
     private final Double costPrice;
     private final Double sellingPrice;
 }
