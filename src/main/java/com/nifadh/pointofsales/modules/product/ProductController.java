@@ -1,17 +1,20 @@
 package com.nifadh.pointofsales.modules.product;
 
 import com.nifadh.pointofsales.modules.commondtos.SoftDeleteRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Validated
 public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/product")
-    public ProductResponse addProduct(@RequestBody ProductRequest productRequest) {
+    public ProductResponse addProduct(@Valid @RequestBody ProductRequest productRequest) {
         return productService.addProduct(productRequest);
     }
 
