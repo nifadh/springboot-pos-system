@@ -1,7 +1,6 @@
 package com.nifadh.pointofsales.modules.product;
 
 import com.nifadh.pointofsales.modules.product.brand.BrandResponse;
-import com.nifadh.pointofsales.modules.product.category.Category;
 import com.nifadh.pointofsales.modules.product.category.CategoryResponse;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,4 +18,5 @@ public class ProductResponse {
     private final BrandResponse brand;
     private final Double costPrice;
     private final Double sellingPrice;
+    private final String productType;
 }

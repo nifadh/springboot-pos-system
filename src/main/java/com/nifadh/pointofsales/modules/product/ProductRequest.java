@@ -6,6 +6,7 @@ import com.nifadh.pointofsales.validation.groups.First;
 import com.nifadh.pointofsales.validation.groups.Second;
 import jakarta.validation.GroupSequence;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -36,6 +37,9 @@ public class ProductRequest {
     @IsDouble(message = "Selling price must be valid!", groups = {Second.class})
     private final String sellingPrice;
 
+    @NotBlank(message = "Product type should not be empty")
+    @Pattern(regexp = "^(?i)(INDIVIDUAL|WEIGHTED)$", message = "Enter a valid product type!")
+    private final String productType;
 
     public Double getCostPrice() {
         return Double.parseDouble(this.costPrice);

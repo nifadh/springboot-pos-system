@@ -24,6 +24,7 @@ public class ProductMapper {
                 .brand(brand)
                 .costPrice(productRequest.getCostPrice())
                 .sellingPrice(productRequest.getSellingPrice())
+                .productType(ProductType.valueOf(productRequest.getProductType()))
                 .build();
     }
 
@@ -41,6 +42,7 @@ public class ProductMapper {
                 )
                 .costPrice(product.getCostPrice())
                 .sellingPrice(product.getSellingPrice())
+                .productType(product.getProductType().name())
                 .build();
     }
 
