@@ -11,4 +11,9 @@ public class TimeUtil {
         ZonedDateTime sriLankanTime = ZonedDateTime.now(sriLankaZone);
         return sriLankanTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME);
     }
+
+    public static ZonedDateTime getSriLankanDateTime() {
+        ZoneId sriLankaZone = ZoneId.of("Asia/Colombo");
+        return ZonedDateTime.now(sriLankaZone);
+    }
 }
