@@ -11,6 +11,7 @@ import com.nifadh.pointofsales.modules.product.stock.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Random;
@@ -33,6 +34,7 @@ public class ProductService {
         this.stockService = stockService;
     }
 
+    @Transactional
     public ProductResponse addProduct(ProductRequest productRequest) {
         checkForDuplicateProduct(productRequest.getName());
         Category category = categoryService.findCategoryById(productRequest.getCategoryId());
