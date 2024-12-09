@@ -7,20 +7,31 @@ import com.nifadh.pointofsales.modules.product.brand.Brand;
 import com.nifadh.pointofsales.modules.product.brand.BrandService;
 import com.nifadh.pointofsales.modules.product.category.Category;
 import com.nifadh.pointofsales.modules.product.category.CategoryService;
-import lombok.RequiredArgsConstructor;
+import com.nifadh.pointofsales.modules.product.stock.StockService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Random;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final CategoryService categoryService;
     private final BrandService brandService;
+    private final StockService stockService;
 
+
+    @Autowired
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper, CategoryService categoryService, BrandService brandService, @Lazy StockService stockService) {
+        this.productRepository = productRepository;
+        this.productMapper = productMapper;
+        this.categoryService = categoryService;
+        this.brandService = brandService;
+        this.stockService = stockService;
+    }
 
     public ProductResponse addProduct(ProductRequest productRequest) {
         checkForDuplicateProduct(productRequest.getName());
@@ -32,6 +43,8 @@ public class ProductService {
         product.setItemCode(itemCode);
         product.setIsDeleted(false);
         product = productRepository.save(product);
+
+        stockService.createStockForNewProduct(product);
         return productMapper.productToProductResponse(product);
     }
 
@@ -44,6 +57,11 @@ public class ProductService {
             itemCode = categoryPrefix + "-" + brandPrefix + "-" + randomValue;
         } while (productRepository.existsByItemCode(itemCode));
         return itemCode;
+    }
+
+    public Product findProductById(Integer productId) {
+        checkIfProductIdIsValid(productId);
+        return productRepository.findById(productId).get();
     }
 
     public ProductResponseList getAllProducts() {
