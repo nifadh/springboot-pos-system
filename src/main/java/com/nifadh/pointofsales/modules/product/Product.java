@@ -3,7 +3,10 @@ package com.nifadh.pointofsales.modules.product;
 import com.nifadh.pointofsales.modules.product.brand.Brand;
 import com.nifadh.pointofsales.modules.product.category.Category;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 
@@ -31,6 +34,9 @@ public class Product {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "id", name = "brand_id")
     private Brand brand;
+
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
 
     private Double costPrice;
 
